@@ -11,8 +11,8 @@ const personalInfoDocId = ref(null); // Initialize as an empty string for person
 
 //Info persona
 const bloodType = ref('');
-const allergies = ref('');
 const birthDate = ref('');
+
 
 const fetchPersonalInfo = async () => {
   try {
@@ -23,8 +23,8 @@ const fetchPersonalInfo = async () => {
       personalInfoDocId.value = docSnap.id; // Store ID
       personalInfoData.value = querySnapshot.docs[0].data();
       bloodType.value = personalInfoData.value.bloodType;
-      allergies.value = personalInfoData.value.allergies;
-      
+
+
       if (personalInfoData.value.birthDate && typeof personalInfoData.value.birthDate.toDate === 'function') {
         birthDate.value = personalInfoData.value.birthDate.toDate().toISOString().substr(0, 10);
       } else {
@@ -60,7 +60,6 @@ const savePersonalInfo = async () => {
   try {
     const data = {
       bloodType: bloodType.value,
-      allergies: allergies.value,
       birthDate: Timestamp.fromDate(new Date(birthDate.value)),
       userId: userStore.user?.uid
     };
@@ -77,7 +76,7 @@ const savePersonalInfo = async () => {
       alert('Información personal guardada correctamente');
     }
 
-    await fetchPersonalInfo(); 
+    await fetchPersonalInfo();
   } catch (error) {
     console.error('Error guardando la información personal:', error);
   }
@@ -106,11 +105,6 @@ fetchPersonalInfo();
       </div>
 
       <div class="mb-3">
-        <label for="allergies" class="form-label">Alergias</label>
-        <input type="text" id="allergies" v-model="allergies" class="form-control" required>
-      </div>
-
-      <div class="mb-3">
         <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
         <input type="date" id="birthDate" v-model="birthDate" class="form-control" required />
       </div>
@@ -121,7 +115,6 @@ fetchPersonalInfo();
     <div v-if="personalInfoData">
       <h4 class="mt-4">Datos Guardados:</h4>
       <p><strong>Tipo de Sangre:</strong> {{ personalInfoData.bloodType }}</p>
-      <p><strong>Alergias:</strong> {{ personalInfoData.allergies }}</p>
       <p><strong>Fecha de Nacimiento:</strong> {{ formatDate(personalInfoData.birthDate) }}</p>
     </div>
   </div>
