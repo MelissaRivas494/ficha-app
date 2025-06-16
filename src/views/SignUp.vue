@@ -17,7 +17,7 @@ const register = async () => {
     const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
     const user = userCredential.user;
 
-    // Save name to the user's profile
+    // Save name 
     await updateProfile(user, {
       displayName: name.value
     });
@@ -29,7 +29,7 @@ const register = async () => {
       name: name.value
     });
 
-    // Redirect to the home page or any other page
+    // Redirect to the home 
     router.push('/dashboard');
   } catch (err) {
     error.value = err.message;
