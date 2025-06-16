@@ -36,7 +36,7 @@ const fetchPersonalInfo = async () => {
   }
 };
 
-// Formato fechaaa
+// fechaaa nac
 const formatDate = (dateValue) => {
   if (!dateValue) return 'No definida';
 
